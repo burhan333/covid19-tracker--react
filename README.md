@@ -1,4 +1,14 @@
-# Getting Started with Create React App
+## Covid-19 Tracker
+A Covid 19 Tracker which tracks Covid-19 Data All Acrros The Globe
+This Tracker Tracks the following data
+- New Cases
+- Total Cases
+- New Deaths
+- Total Deaths
+- New Recoveries
+- Total Recoveries
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
