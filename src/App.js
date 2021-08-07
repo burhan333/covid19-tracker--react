@@ -1,4 +1,4 @@
-import Covid from './component/main';
+import Covid from './component/covid';
 import './App.css';
 
 function App() {
