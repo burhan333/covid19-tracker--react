@@ -99,7 +99,7 @@ const Covid = () => {
                 <div className="card recovery">
                     <div className="head">
                         <h3>Total Recoveries</h3>
-                        <img src={cases}/>
+                        <img src={recovered}/>
                     </div>
                     {isLoading && <h1>Loading...</h1>}
                     {!isLoading && <h1>{totalRecovery.toLocaleString()}</h1>}
