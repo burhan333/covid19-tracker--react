@@ -1,21 +1,16 @@
 import React, { useState, useEffect } from "react";
+import cases from '../images/diagnosed-cases.png';
+import deaths from '../images/deaths.png'
+import recovered from '../images/recovered.png'
 
 const Covid = () => {
-    const [name, setName] = useState('')
-    const [age, setAge] = useState()
-    const [hobbies, setHobbies] = useState(['cricket', 'football'])
-    const [city, setCity] = useState()
     const [newCases, setNewCases] = useState()
-    const [total, setTotal] = useState()
-    const [death, setDeath] = useState()
-    const [data, setData] = useState('')
-    const temp = {'sports': 'baseball'}
-
-    function func() {
-        setHobbies(prevState => [...prevState, temp])
-    }
-
-    // console.log('hobbies', hobbies)
+    const [totalCases, setTotalCases] = useState()
+    const [newDeath, setNewDeath] = useState()
+    const [totalDeath, setTotalDeath] = useState()
+    const [totalRecovery, setTotalRecovery] = useState()
+    const [global, setGlobal] = useState(true)
+    const [isLoading, setIsLoading] = useState(true)
 
 
     useEffect(() => {
@@ -28,21 +23,92 @@ const Covid = () => {
             }
         })
         .then((data) => {
-            setData(data.currentDateTime)
-            setNewCases(data.Global.NewConfirmed)
-            setTotal(data.Global.TotalConfirmed)
-            setDeath(data.Global.TotalDeaths)
-            console.log(data)
+            if (global) {
+                setNewCases((data.Global.NewConfirmed))
+                setTotalCases((data.Global.TotalConfirmed))
+                setNewDeath((data.Global.NewDeaths))
+                setTotalDeath((data.Global.TotalDeaths))
+                setTotalRecovery((totalCases - totalDeath))
+                setIsLoading(false)
+                console.log('total recovery', data.Global)
+            }
+            else
+            {
+                setNewCases((data.Countries[129].NewConfirmed))
+                setTotalCases((data.Countries[129].TotalConfirmed))
+                setNewDeath((data.Countries[129].NewDeaths))
+                setTotalDeath((data.Countries[129].TotalDeaths))
+                setTotalRecovery((totalCases - totalDeath))
+                setIsLoading(false)
+            }
         })
         .catch((error) => console.log(error))
     })
 
+    const handleClick = () => {
+        if (global) {
+            setGlobal(false)
+            setIsLoading(true)
+        }
+        else {
+            setGlobal(true)
+            setIsLoading(true)
+        }
+    }
+
     return(
-        // <button onClick={func}>click</button>
         <>
-            <h1>NewConfirmed {newCases}</h1>
-            <h1>TotalConfirmed {total}</h1>
-            <h1>TotalDeaths. {death}</h1>
+            <h1 className="title">Covid-19 Tracker</h1>
+            <div className="buttons">
+                {global && <button onClick={handleClick} disabled>GLOBAL</button>}
+                {!global && <button onClick={handleClick}>GLOBAL</button>}
+                {!global && <button onClick={handleClick} disabled>PAKISTAN</button>}
+                {global && <button onClick={handleClick}>PAKISTAN</button>}
+            </div>
+            <div className="body">
+                <div className="card cases">
+                    <div className="head">
+                        <h3>Total Cases</h3>
+                        <img src={cases}/>
+                    </div>
+                    {isLoading && <h1>Loading...</h1>}
+                    {!isLoading && <h1>{totalCases.toLocaleString()}</h1>}
+                </div>
+                <div className="card cases">
+                    <div className="head">
+                        <h3>New Cases</h3>
+                        <img src={cases}/>
+                    </div>
+                    {isLoading && <h1>Loading...</h1>}
+                    {!isLoading && <h1>{newCases.toLocaleString()}</h1>}
+                </div>
+                <div className="card deaths">
+                    <div className="head">
+                        <h3>Total Deaths</h3>
+                        <img src={deaths}/>
+                    </div>
+                    {isLoading && <h1>Loading...</h1>}
+                    {!isLoading && <h1>{totalDeath.toLocaleString()}</h1>}
+                </div>
+            </div>
+            <div className="body">
+                <div className="card deaths">
+                    <div className="head">
+                        <h3>New Deaths</h3>
+                        <img src={deaths}/>
+                    </div>
+                    {isLoading && <h1>Loading...</h1>}
+                    {!isLoading && <h1>{newDeath.toLocaleString()}</h1>}
+                </div>
+                <div className="card recovery">
+                    <div className="head">
+                        <h3>Total Recoveries</h3>
+                        <img src={cases}/>
+                    </div>
+                    {isLoading && <h1>Loading...</h1>}
+                    {!isLoading && <h1>{totalRecovery.toLocaleString()}</h1>}
+                </div>
+            </div>
         </>
     );
 };
