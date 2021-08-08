@@ -30,10 +30,8 @@ const Covid = () => {
                 setTotalDeath((data.Global.TotalDeaths))
                 setTotalRecovery((totalCases - totalDeath))
                 setIsLoading(false)
-                console.log('total recovery', data.Global)
             }
-            else
-            {
+            else {
                 setNewCases((data.Countries[129].NewConfirmed))
                 setTotalCases((data.Countries[129].TotalConfirmed))
                 setNewDeath((data.Countries[129].NewDeaths))
@@ -90,8 +88,6 @@ const Covid = () => {
                     {isLoading && <h1>Loading...</h1>}
                     {!isLoading && <h1>{totalDeath.toLocaleString()}</h1>}
                 </div>
-            </div>
-            <div className="body">
                 <div className="card deaths">
                     <div className="head">
                         <h3>New Deaths</h3>
@@ -108,6 +104,12 @@ const Covid = () => {
                     {isLoading && <h1>Loading...</h1>}
                     {!isLoading && <h1>{totalRecovery.toLocaleString()}</h1>}
                 </div>
+            </div>
+            <div className="body">
+
+            </div>
+            <div className="foot">
+                <p>NOTE: This App is Made Using <a href="https://documenter.getpostman.com/view/10808728/SzS8rjbc" target="_blank">This</a> API The Data will keep on updated until this API is being updated by its contributors</p>
             </div>
         </>
     );
