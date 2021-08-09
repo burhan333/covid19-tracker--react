@@ -12,7 +12,6 @@ const Covid = () => {
     const [global, setGlobal] = useState(true)
     const [isLoading, setIsLoading] = useState(true)
 
-
     useEffect(() => {
         fetch("https://api.covid19api.com/summary")
         .then((res) => {
@@ -28,7 +27,7 @@ const Covid = () => {
                 setTotalCases((data.Global.TotalConfirmed))
                 setNewDeath((data.Global.NewDeaths))
                 setTotalDeath((data.Global.TotalDeaths))
-                setTotalRecovery((totalCases - totalDeath))
+                setTotalRecovery((data.Global.TotalConfirmed - data.Global.TotalDeaths))
                 setIsLoading(false)
             }
             else {
@@ -36,7 +35,7 @@ const Covid = () => {
                 setTotalCases((data.Countries[129].TotalConfirmed))
                 setNewDeath((data.Countries[129].NewDeaths))
                 setTotalDeath((data.Countries[129].TotalDeaths))
-                setTotalRecovery((totalCases - totalDeath))
+                setTotalRecovery((data.Countries[129].TotalConfirmed - data.Countries[129].TotalDeaths))
                 setIsLoading(false)
             }
         })
